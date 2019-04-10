@@ -1,5 +1,4 @@
 using Util
-using Util.PageDict
 
 include("world_util.jl")
 
@@ -44,25 +43,22 @@ mutable struct AgentT{L}
 	# current real position
 	loc :: L
 	in_transit :: Bool
+	# next step, could be L but this is easier
+	next :: InfoLocation
 	# what it thinks it knows about the world
 	n_locs :: Int
 	info_loc :: Vector{InfoLocation}
-	info_target :: Vector{InfoLocation}
 	n_links :: Int
 	info_link :: Vector{InfoLink}
-	plan :: Vector{InfoLocation}
 	# abstract capital, includes time & money
 	capital :: Float64
 	# people at home & in target country, other migrants
 	contacts :: Vector{AgentT{L}}
 	steps :: Int
-	planned :: Int
 end
 
-AgentT{L}(l::L, c :: Float64) where {L} = AgentT{L}(l, true, 0, [], [], 0, [], [], c, [], 0, 0)
+AgentT{L}(l::L, c :: Float64) where {L} = AgentT{L}(l, true, Unknown, 0, [],  0, [], c, [], 0)
 
-
-target(agent) = length(agent.info_target) > 0 ? agent.info_target[1] : Unknown
 
 arrived(agent) = agent.loc.typ == EXIT
 
@@ -71,9 +67,6 @@ function add_info!(agent, info :: InfoLocation, typ = STD)
 	@assert agent.info_loc[info.id] == Unknown
 	agent.n_locs += 1
 	agent.info_loc[info.id] = info
-	if typ == EXIT
-		push!(agent.info_target, info)
-	end
 end
 
 function add_info!(agent, info :: InfoLink) 
