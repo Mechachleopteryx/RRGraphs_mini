@@ -76,7 +76,7 @@ const linkf = open(args[:link_file], "w")
 
 prepare_log(logf)
 #prepare_out(outf)
-const m = run(p, n_steps, logf)
+const m = @time run(p, n_steps, logf)
 
 analyse_world(m, cityf, linkf)
 

@@ -281,7 +281,7 @@ end
 # meet other agents, gain contacts and information
 function mingle!(agent, location, world, par)
 	for a in location.people
-		if a == agent
+		if a == agent || a.in_transit
 			continue
 		end
 

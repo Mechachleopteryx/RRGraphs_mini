@@ -13,12 +13,12 @@ const VF = Vector{Float64}
 	rand_seed_world	:: Int		= 123
 
 	"number of cities"
-	n_cities		:: Int		= 300
+	n_cities		:: Int		= 50
 	"maximum distance for link generation"
-	link_thresh		:: Float64	= 0.1
+	link_thresh		:: Float64	= 0.3
 
 	"number of departures per time step"
-	rate_dep	 	:: Float64	= 20
+	rate_dep	 	:: Float64	= 10
 	n_exits			:: Int		= 10
 	"number of starting positions"
 	n_entries		:: Int		= 3
